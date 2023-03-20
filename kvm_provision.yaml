@@ -1,0 +1,31 @@
+- name: Deploys VM cluster based on cloud image
+  hosts: localhost
+  gather_facts: yes
+  become: no
+  vars:
+    pool_dir: "/var/lib/libvirt/images"
+    vcpus: 4
+    ram_mb: 4096
+    net: default
+    ssh_pub_key: "{{ansible_env.HOME}}/Download/kvm_provision/ssh_keys/id_rsa.pub"
+
+    name: f37
+    hosts:
+      - host_name: "{{ name }}-a"
+        host_IP: 192.168.122.2
+      - host_name: "{{ name }}-b"
+        host_IP: 192.168.122.3
+      - host_name: "{{ name }}-c"
+        host_IP: 192.168.122.4
+
+  tasks:
+    - name: KVM Provision role
+      include_role:
+        name: kvm_provision
+      vars:
+        libvirt_pool_dir: "{{ pool_dir }}"
+        guests: "{{ hosts }}"
+        vm_vcpus: "{{ vcpus }}"
+        vm_ram_mb: "{{ ram_mb }}"
+        vm_net: "{{ net }}"
+        ssh_key: "{{ ssh_pub_key }}"

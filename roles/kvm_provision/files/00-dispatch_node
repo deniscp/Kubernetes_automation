@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+set -e
+
+interface="${1}"
+action="${2}"
+
+if [[ "$action" == "up" ]]  && [[ "$interface" == "eth0" ]]; then
+    /root/dispatched/node.sh 1>> /root/dispatched/node_output.txt 2>> /root/dispatched/node_error.txt
+    chmod a-x $0
+    shutdown -h now
+fi
+
+
+exit 0

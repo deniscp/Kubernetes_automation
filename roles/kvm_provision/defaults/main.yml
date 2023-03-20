@@ -1,0 +1,20 @@
+---
+# defaults file for kvm_provision
+base_image_path_prefix: "{{ansible_env.HOME}}/Download/kvm_provision/"
+base_image_name: Fedora-Cloud-Base-37-1.7.x86_64.qcow2
+base_image_path: "{{ base_image_path_prefix }}/{{ base_image_name }}"
+libvirt_pool_dir: "/var/lib/libvirt/images"
+vm_vcpus: 4
+vm_ram_mb: 4096
+vm_net: default
+vm_root_pass: test123
+ssh_key: "{{ansible_env.HOME}}/Download/kvm_provision/ssh_keys/id_rsa.pub"
+
+vm_name: f37-default
+guests:
+  - host_name: "{{ vm_name }}-a"
+    host_IP: 10.0.0.2
+  - host_name: "{{ vm_name }}-b"
+    host_IP: 10.0.0.3
+  - host_name: "{{ vm_name }}-c"
+    host_IP: 10.0.0.4
